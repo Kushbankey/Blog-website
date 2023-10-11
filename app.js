@@ -2,7 +2,6 @@
 
 import express from "express";
 import bodyParser from "body-parser";
-import ejs from "ejs";
 import _ from "lodash";
 import mongoose from "mongoose";
 
@@ -78,7 +77,7 @@ app.post("/compose", function(req, res){
 
       if(existingPost){
         const msg="A post with the same title already exists!";
-        console.log(msg);
+        //console.log(msg);
         res.render("compose", {message: msg});
       }
       else{
@@ -107,7 +106,7 @@ app.get("/posts/:postId", function(req, res){
     try{
       const result= await Post.findOne({_id: requestedPostId});
 
-      console.log(`Found a post titled: ${result.title}.`);
+      //console.log(`Found a post titled: ${result.title}.`);
       res.render("post", {
         id: result._id,
         title: result.title,
@@ -126,10 +125,6 @@ app.get("/posts/:postId/edit", function(req,res){
     try{
       const requestedPostId=req.params.postId;
       const post=await Post.findOne({_id: requestedPostId});
-
-      // if(!post){
-      //   return res.status(404).json({ message: 'Post not found' });
-      // }
 
       res.render(`edit`, {
         postId: post._id,
@@ -159,7 +154,7 @@ app.post("/posts/:postId/edit", function(req,res){
         // If the post with the specified ID is not found
         return res.status(404).json({ message: 'Post not found' });
       }
-      console.log(`Updated posts with title: ${postTitle}.`);
+      //console.log(`Updated posts with title: ${postTitle}.`);
 
       // Redirect the user to the post's details page after the update
       res.redirect(`/posts/${postId}`);
@@ -177,7 +172,7 @@ app.post("/posts/delete", function(req,res){
       const id=req.body.deleteBtn;
       //console.log(id);
       const result= await Post.deleteOne({_id: id});
-      console.log(`1 post deleted.`);
+      //console.log(`1 post deleted.`);
 
       res.redirect("/");
     }
